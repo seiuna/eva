@@ -151,3 +151,40 @@ TeacherTest.belongsTo(Teacher, { foreignKey: 'jobnumber', targetKey: 'jobnumber'
 TeacherTest.belongsTo(CourseScheduling, { foreignKey: 'coursecode', targetKey: 'coursecode' });
 CourseScheduling.hasMany(TeacherTest, { foreignKey: 'coursecode', sourceKey: 'coursecode' });
 
+
+
+
+
+
+export const searchTeacherByid=async (teacherid:string|number)=>{
+   try {
+    return  await  Teacher.findOne({
+           where: {
+               jobnumber: teacherid,
+           }
+       })
+   }catch (e){
+       return Promise.reject("不存在")
+   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
