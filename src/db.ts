@@ -28,7 +28,6 @@ export const Teacher = sequelize.define('Teacher', {
     sex: {
         type: DataTypes.STRING,
     },
-    // 其他字段...
 }, {
     timestamps: false,
     tableName: 'tbl_teacher',
@@ -141,6 +140,31 @@ export const TeacherTest = sequelize.define('TeacherTest', {
     tableName: 'tbl_teachertest',
 });
 
+export const yearTerm = sequelize.define('yearTerm', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    yeartermname: {
+        type: DataTypes.STRING, // 可能需要适当的类型
+    },
+    yeartermcode: {
+        type: DataTypes.STRING, // 可能需要适当的类型
+    },
+    year: {
+        type: DataTypes.STRING, // 可能需要适当的类型
+    },
+    termcode: {
+        type: DataTypes.INTEGER, // 可能需要适当的类型
+    },
+    // 其他字段...
+}, {
+    timestamps: false,
+    tableName: 'tbl_yearterm',
+});
+
+
 // 设置外键关联
 Teacher.hasMany(CourseScheduling, { foreignKey: 'jobnumber', sourceKey: 'jobnumber' });
 CourseScheduling.belongsTo(Teacher, { foreignKey: 'jobnumber', targetKey: 'jobnumber' });
@@ -164,8 +188,19 @@ export const searchTeacherByid=async (teacherid:string|number)=>{
            }
        })
    }catch (e){
-       return Promise.reject("不存在")
+       return Promise.reject()
    }
+}
+
+export const findAllTerms=async ()=>{
+    try {
+        return  await  yearTerm.findAll({
+            where: {
+            }
+        })
+    }catch (e){
+        return Promise.reject()
+    }
 }
 
 

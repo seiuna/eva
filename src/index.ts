@@ -1,5 +1,5 @@
 import * as express from "express";
-import {CourseScheduling, searchTeacherByid, Teacher, TeacherTest} from "./db";
+import {CourseScheduling, findAllTerms, searchTeacherByid, Teacher, TeacherTest} from "./db";
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
@@ -71,7 +71,16 @@ app.post('/api/login', async function (req, res) {
     if(req.body.userid){
 
     }
-    res.send({message:"用户不存在",status:"0",context:""})
+
+})
+
+app.get('/api/yearTermInfos', async function (req, res) {
+   const context=await  findAllTerms().then((results)=>{
+       return results.map((v)=>{
+           return {termid:v.dataValues.id,name:`${v.dataValues.yeartermcode} ${v.dataValues.yeartermname}`}
+       })
+   })
+    res.send({message:"success",status:"0",context: context})
 })
 
 app.listen(8080)
